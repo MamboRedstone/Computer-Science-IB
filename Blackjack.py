@@ -1,4 +1,5 @@
 import random
+from terminology import in_red, in_green, in_black, on_red, on_green, on_white
 
 players = [[0], [0], [0], [0]]
 
@@ -37,8 +38,9 @@ def calc_total(player_num):
                     # if ace gets over 21 it changes from 11 to 1
 
 def read_cards(player_num):
-    print(f"Player {player_num+1} info:")
-    print(f"Cards Total: {players[player_num][0]}")
+    print("\n")
+    print(on_white(in_black(f"Player {player_num+1} Cards:")))
+    # print(f"Cards Total: {players[player_num][0]}")
     for i in range(1, len(players[player_num]), 1):
         print(f"{players[player_num][i]}")
         # reads cards from the player
@@ -68,7 +70,7 @@ end_game_check = 0
 while Playing:
     # start game loop
     if end_game_check == total_players:
-        print("All players have lost!")
+        print(on_red("All players have lost!"))
         exit()
     end_game_check = 0
     # check for if all players have lost
@@ -80,20 +82,20 @@ while Playing:
             # skips player that have lost
         
         read_cards(i)
-        draw_card = input(f"Player {i+1}: Do you want to stick or twist: ")
+        draw_card = input(on_white(in_black(f"Player {i+1}: Do you want to stick or twist? ")))
         if draw_card == "stick":
-            read_cards(i)
-            print("\n")
+            # read_cards(i)
+            # print("\n")
+            continue
         elif draw_card == "twist":
             draw_cards(1, i)
             calc_total(i)
             read_cards(i)
-            print("\n")  
             # makes user choose between stick and twist
 
         if players[i][0] == 21:
-            print(f"Player {i+1} wins!")
+            print(on_green(f"Player {i+1} wins!\n"))
             exit()
         elif players[i][0] > 21:
-            print(f"Player {i+1} lost!")
+            print(on_red(f"Player {i+1} lost!\n"))
             # checks player win/lose condition  
