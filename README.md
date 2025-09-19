@@ -1,4 +1,2 @@
 # Computer-Science-IB:
-
-# Added blackjack with realistic deck of cards.
-# No dealer logic.
+# Posting whatever I do for IB coding on here
