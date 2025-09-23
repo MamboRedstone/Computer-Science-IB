@@ -1,7 +1,5 @@
 import random
-from terminology import in_red, in_green, in_black, on_red, on_green, on_white
-
-players = [[0], [0], [0], [0]]
+from terminology import in_black, on_red, on_green, on_white
 
 cards = [
     "2 Diamonds", "3 Diamonds", "4 Diamonds", "5 Diamonds", "6 Diamonds", "7 Diamonds", "8 Diamonds", "9 Diamonds", "10 Diamonds", "Jack Diamonds", "Queen Diamonds", "King Diamonds", "Ace Diamonds",
@@ -49,14 +47,18 @@ Valid = False
 
 while not Valid:
     try:
-        total_players = int(input("Enter total number of players (1-4): "))
-        print("\n")
-        if not 1 <= total_players <= 4:
-            print("Invalid player count.")
+        total_players = int(input("Enter total number of players (1-8): "))
+        if not 1 <= total_players <= 8:
+            print("\nInvalid player count.")
         else:
             Valid = True
     except ValueError:
-        print("Must be a number.")
+        print("\nMust be a number.")
+
+print("\n")
+
+players = [[0] for _ in range(total_players)]
+# array that stores all players total and cards.
 
 for i in range(total_players):
     draw_cards(2, i)
@@ -82,12 +84,10 @@ while Playing:
             # skips player that have lost
         
         read_cards(i)
-        draw_card = input(on_white(in_black(f"Player {i+1}: Do you want to stick or twist? ")))
-        if draw_card == "stick":
-            # read_cards(i)
-            # print("\n")
+        draw_card = input(on_white(in_black(f"Player {i+1}: Do you want to stick or twist? "))).lower()
+        if draw_card in ["stick", "s"]:
             continue
-        elif draw_card == "twist":
+        elif draw_card in ["twist", "t"]:
             draw_cards(1, i)
             calc_total(i)
             read_cards(i)
