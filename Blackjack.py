@@ -20,6 +20,7 @@ def draw_cards(amount, player_num):
 
 #function to calculate all cards value 
 def calc_total(player_num):
+    acePresent = 0
     players[player_num][0] = 0  
     # check if the card type
     for i in range(1, len(players[player_num])):
@@ -34,10 +35,13 @@ def calc_total(player_num):
 
             # if ace gets over 21 it changes from 11 to 1
             elif card_val == "Ace":
-                if players[player_num][0] + 11 > 21:
-                    players[player_num][0] += 1 # add 1
-                else:
-                    players[player_num][0] += 11 # add 11
+                acePresent += 1
+
+    for _ in range(acePresent):
+        if players[player_num][0] + 11 > 21:
+            players[player_num][0] += 1 # add 1
+        else:
+            players[player_num][0] += 11 # add 11
                     
 
 # function to read total value of cards and all cards of a specific player
@@ -87,16 +91,15 @@ while Playing:
         # makes user choose between stick and twist
         draw_card = input(on_white(in_black(f"Player {i+1}: Do you want to stick or twist? "))).lower()
         if draw_card in ["stick", "s"]:
-            continue
+            pass
         elif draw_card in ["twist", "t"]:
             draw_cards(1, i)
             calc_total(i)
             read_cards(i)
-            
+
         # checks player win/lose condition
         if players[i][0] == 21:
             print(on_green(f"Player {i+1} wins!\n"))
             exit()
         elif players[i][0] > 21:
-            print(on_red(f"Player {i+1} lost!\n"))
-              
+            print(on_red(f"Player {i+1} lost!\n"))       
